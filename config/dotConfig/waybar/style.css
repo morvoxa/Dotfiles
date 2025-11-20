@@ -1,5 +1,5 @@
 * {
-  font-family:monospace;
+  font-family: SF Pro text;
   font-size: 10px; /* Ukuran font kecil */
   padding: 0px; /* Hilangkan padding */
   margin: 0px; /* Hilangkan margin */
@@ -9,7 +9,7 @@
 }
 
 #waybar {
-  background: black;
+  background: transparent;
 }
 
 #workspaces {
@@ -47,7 +47,7 @@
 #pulseaudio,
 #tray,
 #temperature {
-  background-color: #101010;
+  background-color: transparent;
   color: white;
   padding: 0px 5px; /* Hilangkan padding */
 }
