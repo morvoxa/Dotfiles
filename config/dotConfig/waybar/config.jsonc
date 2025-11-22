@@ -33,7 +33,7 @@
     }
   },
   "custom/avatar": {
-    "format": ""
+    "format": "morvoxa"
   },
   "custom/netspeed": {
   "exec": "~/Dotfiles/bin/netspeed",
@@ -44,8 +44,8 @@
     "format": "{icon}",
 
     "format-icons": {
-    "active": "",
-	"default": ""
+    "active": "󰗈",
+	"default": "󰗉"
     }
   },
   "tray": {

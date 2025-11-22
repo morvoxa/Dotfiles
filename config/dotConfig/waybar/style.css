@@ -27,7 +27,7 @@
 }
 
 #workspaces button.active {
-  background-color: black;
+  background-color: transparent;
   color: red;
 }
 
@@ -55,5 +55,9 @@
   color: white;
   border-radius: 5px;
   padding-right: 10px;
-  border: 2px solid white;
+  border: 2px solid red;
+}
+
+#custom-netspeed {
+    color: red;
 }

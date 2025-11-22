@@ -18,6 +18,6 @@
     apple-cursor
     rust-analyzer
     rustfmt
-    obsidian
+    btop
   ];
 }
