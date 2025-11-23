@@ -10,6 +10,7 @@
 
 #waybar {
   background: transparent;
+  border: 1px solid red;
 }
 
 #workspaces {
@@ -59,5 +60,5 @@
 }
 
 #custom-netspeed {
-  color: red;
+  color: green;
 }
