@@ -32,7 +32,10 @@
   programs.zsh.enable = true;
   users.users.dev = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "libvirtd"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [ tree ];
     shell = pkgs.zsh;
   };

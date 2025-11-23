@@ -39,6 +39,7 @@
           ./modules/Niri # wndow manager
           ./modules/neovim-nightly # code editor
           ./modules/fonts # fonts config
+          ./modules/virt # fonts config
           ./modules/pkgs # software or system package
 
           # specific module
