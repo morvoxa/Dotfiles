@@ -51,12 +51,12 @@
   background-color: transparent;
   color: white;
   padding: 0px 5px; /* Hilangkan padding */
+  border: 2px solid blue;
 }
 #custom-avatar {
   color: white;
   border-radius: 5px;
   padding-right: 10px;
-  border: 2px solid red;
 }
 
 #custom-netspeed {

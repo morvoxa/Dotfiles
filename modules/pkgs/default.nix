@@ -20,5 +20,8 @@
     rustfmt
     btop
     prettierd
+    ntfs3g
+    pcsx2
+    p7zip
   ];
 }
