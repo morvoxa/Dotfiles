@@ -1,6 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+ “rust-analyzer.server.path”: “rust-analyzer”,
   "vim.useSystemClipboard": true,
   "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
