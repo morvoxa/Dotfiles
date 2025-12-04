@@ -8,7 +8,7 @@
   };
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-25.11";
     };
 
     neovim-nightly-overlay = {
@@ -36,10 +36,10 @@
         inherit system;
         modules = [
           ./modules/base-system # nixos base
-          ./modules/Niri # wndow manager
+          ./modules/Cosmic # wndow manager
           ./modules/neovim-nightly # code editor
           ./modules/fonts # fonts config
-          ./modules/virt # fonts config
+          #./modules/virt # virtual mechine manager config
           ./modules/pkgs # software or system package
 
           # specific module
