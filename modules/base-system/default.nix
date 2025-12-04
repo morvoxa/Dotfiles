@@ -11,6 +11,7 @@
   environment.sessionVariables = {
     XDG_SESSION_TYPE = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   };
   nix.settings.experimental-features = [
     "nix-command"
@@ -20,6 +21,7 @@
     "quiet"
     "video=1366x768"
   ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.loader.grub.enable = true;
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiSupport = true;
