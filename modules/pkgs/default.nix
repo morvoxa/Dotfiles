@@ -12,10 +12,6 @@
     vscode-fhs
     cargo
     rustc
-    waybar
-    wofi
-    swaybg
-    apple-cursor
     rust-analyzer
     rustfmt
     btop

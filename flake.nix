@@ -36,7 +36,7 @@
         inherit system;
         modules = [
           ./modules/base-system # nixos base
-          ./modules/Cosmic # wndow manager
+          ./modules/hyprland # wndow manager
           ./modules/neovim-nightly # code editor
           ./modules/fonts # fonts config
           #./modules/virt # virtual mechine manager config

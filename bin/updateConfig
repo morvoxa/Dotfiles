@@ -1,4 +1,4 @@
- for d in nvim alacritty Code ; do
+ for d in nvim alacritty Code hypr; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/config/dotConfig/$d/" ~/.config/$d/ >/dev/null
 done
