@@ -2,11 +2,10 @@
 {
   "layer": "top", // Waybar at top layer
   "position": "top", // Waybar position (top|bottom|left|right)
-  "margin-top": 10,
   "height": 15, // Waybar height (to be removed for auto height)
   // "width": 1280, // Waybar width
   // Choose the order of the modules
-  "modules-left": ["custom/avatar","niri/workspaces" ],
+  "modules-left": ["custom/avatar","hyprland/workspaces" ],
   "modules-center": [
     "clock"
   ],
@@ -40,8 +39,8 @@
   "interval": 1,
   "format": "{}"
 },
-  "niri/workspaces": {
-    "format": "{icon}",
+  "hyprland/workspaces": {
+    "format": "{name}",
 
     "format-icons": {
     "active": "󰗈",
