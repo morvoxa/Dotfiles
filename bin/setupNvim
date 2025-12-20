@@ -1,5 +1,0 @@
-rm -rf ~/.bin
-mkdir -p ~/.bin
-curl -Lo ~/.bin/nvim https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
-tar xvf ~/.bin/nvim -C ~/.bin
-echo "neovim nightly ready"
