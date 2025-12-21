@@ -10,15 +10,14 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-25.11";
     };
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-    };
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";
     };
-
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+    };
   };
+
   outputs =
 
     {
@@ -36,21 +35,18 @@
         inherit system;
         modules = [
           ./modules/base-system # nixos base
+          ./modules/zen-browser # nixos base
           ./modules/Cosmic # wndow manager
-          ./modules/neovim-nightly # code editor
           ./modules/fonts # fonts config
-          #./modules/virt # virtual mechine manager config
+          ./modules/virt # virtual mechine manager config
           ./modules/pkgs # software or system package
-
           # specific module
-
           {
             nixpkgs.config = {
               allowUnfree = true;
             };
           }
         ];
-
         specialArgs = { inherit inputs apple-fonts; };
       };
     };

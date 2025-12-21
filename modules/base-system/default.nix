@@ -6,7 +6,9 @@
 }:
 
 {
-  imports = [ /etc/nixos/hardware-configuration.nix ];
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+  ];
 
   environment.sessionVariables = {
     XDG_SESSION_TYPE = "wayland";
@@ -32,6 +34,10 @@
   time.timeZone = "Asia/Jakarta";
 
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true;
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+
   users.users.dev = {
     isNormalUser = true;
     extraGroups = [
@@ -46,7 +52,6 @@
     wget
     git
     alacritty
-    chromium
     gnumake
 
   ];
