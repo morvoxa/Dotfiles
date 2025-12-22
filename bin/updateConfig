@@ -1,4 +1,4 @@
- for d in Code alacritty cosmic; do
+ for d in VSCodium alacritty cosmic; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/config/dotConfig/$d/" ~/.config/$d/ >/dev/null
 done

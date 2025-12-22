@@ -9,7 +9,7 @@
     tmux
     fastfetch
     nixd
-    vscode-fhs
+    vscodium-fhs
     cargo
     rustc
     rust-analyzer
