@@ -30,17 +30,12 @@
       system = "x86_64-linux";
     in
     {
-      nixosConfigurations.rustlinux = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 
         inherit system;
         modules = [
-          ./modules/base-system # nixos base
-          ./modules/zen-browser # nixos base
-          ./modules/Cosmic # wndow manager
-          ./modules/fonts # fonts config
-          ./modules/virt # virtual mechine manager config
-          ./modules/pkgs # software or system package
-          # specific module
+          ./modules/wsl
+          #./modules/linux
           {
             nixpkgs.config = {
               allowUnfree = true;
