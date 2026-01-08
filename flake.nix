@@ -1,5 +1,5 @@
 {
-  description = "My Home Manager config";
+  description = "Nixos config for linux or wsl";
   nixConfig = {
     substituters = [
       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=10"

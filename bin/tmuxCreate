@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Lokasi direktori tempat project-project kamu disimpan
-PROJECTS_DIR=~/
+PROJECTS_DIR=$(pwd)
 
 cd "$PROJECTS_DIR" || exit
 

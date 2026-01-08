@@ -16,5 +16,6 @@
     rustup
     tmux
     fzf
+    clang
   ];
 }
