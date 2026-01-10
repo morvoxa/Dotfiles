@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -18,5 +18,6 @@
     tmux
     fzf
     clang
+    stylua
   ];
 }
