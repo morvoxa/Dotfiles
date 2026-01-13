@@ -1,8 +1,8 @@
  for d in nvim VSCodium alacritty cosmic; do
     echo "Ready ... $d"
-  rsync -avh --delete "$(pwd)/config/dotConfig/$d/" ~/.config/$d/ >/dev/null
+  rsync -avh --delete "$(pwd)/homeconfig/config/dotConfig/$d/" ~/.config/$d/ >/dev/null
 done
-for f in "$(pwd)"/config/homeConfig/*; do
+for f in "$(pwd)"/homeconfig/config/homeConfig/*; do
     echo "Ready ... $f"
   rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
 done

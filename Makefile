@@ -5,6 +5,6 @@ user:
 	nix run .
 	sh ./bin/updateConfig
 host:
-	sudo nixos-rebuild switch --impure --flake .
+	sudo nixos-rebuild switch --impure --flake OS/
 home: 
-	home-manager switch --flake ./home-manager/
+	home-manager switch --flake ./homeconfig/
