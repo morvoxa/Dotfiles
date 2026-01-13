@@ -38,7 +38,7 @@
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
 
-  users.users.dev = {
+  users.users.mor= {
     isNormalUser = true;
     extraGroups = [
       "wheel"
