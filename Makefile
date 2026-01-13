@@ -7,4 +7,4 @@ user:
 host:
 	sudo nixos-rebuild switch --impure --flake OS/
 home: 
-	home-manager switch --flake ./homeconfig/
+	home-manager switch --flake Userconfig/
