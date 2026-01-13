@@ -1,3 +1,9 @@
+ if [ -d "$HOME/powerlevel10k" ]; then 
+     echo "powerlevelk is redy"
+else
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+fi
  for d in nvim VSCodium alacritty cosmic; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/homeconfig/config/dotConfig/$d/" ~/.config/$d/ >/dev/null
