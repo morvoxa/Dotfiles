@@ -20,6 +20,5 @@ require("transparent").setup({
 		"SLGreen",
 	},
 })
-require("config.statusline-custom")
 
---require("staline").setup({})
+require("staline").setup({})
