@@ -11,14 +11,6 @@ require("config.telescope")
 require("nvim-autopairs").setup()
 require("ibl").setup()
 require("luasnip.loaders.from_vscode").lazy_load()
-require("transparent").setup({
-	extra_groups = {
-		"StatusLine",
-		"StatusLineNC",
-		"SLRed",
-		"SLYellow",
-		"SLGreen",
-	},
-})
+require("transparent").setup()
 
 require("staline").setup({})
