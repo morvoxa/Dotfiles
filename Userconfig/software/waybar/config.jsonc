@@ -68,24 +68,11 @@
     "interval": 1,
   },
   "pulseaudio": {
-    "scroll-step": 5, // %, can be a float
     "format": "{volume}% {icon}",
-    "format-bluetooth": " {volume}% {icon}",
-    "format-bluetooth-muted": " {icon} ",
-    "format-muted": "",
-    "format-source": "{volume}% ",
-    "format-source-muted": "Mute ",
+    "format-muted": "",
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""],
+        "default": ["", "", ""]
     },
-    "tooltip-format": "{format_source}",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-click-right": "pavucontrol",
+    "on-click": "pavucontrol"
   },
 }

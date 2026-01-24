@@ -4,7 +4,7 @@ else
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
     echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 fi
- for d in VSCodium waybar nvim alacritty niri; do
+ for d in awesome waybar nvim alacritty niri; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/Userconfig/software/$d/" ~/.config/$d/ >/dev/null
 done

@@ -1,0 +1,12 @@
+
+
+
+
+
+
+
+
+
+
+xrandr -s 1366x768
+exec awesome
