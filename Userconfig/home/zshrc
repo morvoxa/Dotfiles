@@ -1,6 +1,9 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+    eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
 
 bindkey -s '^f' '~/Dotfiles/bin/tmuxCreate\n'
 alias ls="lsd"
