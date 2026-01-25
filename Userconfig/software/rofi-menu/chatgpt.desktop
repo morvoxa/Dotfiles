@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ChatGPT
+Comment=Buka ChatGPT di browser
+Exec=chromium --new-window https://chat.openai.com/
+Icon=internet-web-browser
+Terminal=false
+Type=Application
+Categories=Network;Utility;
+

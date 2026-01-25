@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+# Nama folder sumber dan tujuan
+d="Code - OSS"
+src="$HOME/Dotfiles/Userconfig/software/$d"
+dest="$HOME/.config/$d"
+
+# Pastikan folder tujuan ada
+mkdir -p "$dest"
+
+# Jalankan rsync dengan quotes agar spasi tidak memecah string
+if [[ -d "$src" ]]; then
+    rsync -av "$src/" "$dest/"
+    echo "Ready ... $d"
+else
+    echo "Skipped ... $d (folder not found at $src)"
+fi
+

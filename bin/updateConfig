@@ -8,8 +8,11 @@ fi
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/Userconfig/software/$d/" ~/.config/$d/ >/dev/null
 done
+ ~/Dotfiles/bin/vscodeconfig
 for f in "$(pwd)"/Userconfig/home/*; do
     echo "Ready ... $f"
   rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
 done
+echo "applications redy"
+cp $(pwd)/Userconfig/software/rofi-menu/chatgpt.desktop ~/.local/share/applications
 
