@@ -3,6 +3,8 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
+local netS=require("netspeed")
+local nets_custom = netS.new()
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -213,6 +215,7 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            nets_custom,
             s.mylayoutbox,
         },
     }
