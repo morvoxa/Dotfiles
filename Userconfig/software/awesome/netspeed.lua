@@ -75,7 +75,7 @@ function net_speed.new()
 				tx_prev = tx
 
 				widget.markup = string.format(
-					"<span foreground='%s'>  %s ⇅ %s</span>",
+					"<span foreground='%s'>  %s ⇅ %s </span>",
 					net_speed.color,
 					net_speed.icon,
 					format_speed(rx_rate)
