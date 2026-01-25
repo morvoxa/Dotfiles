@@ -1,0 +1,12 @@
+sudo xbps-install -Sy \
+lsd \
+lm_sensors \
+curl \
+wget \
+git \
+chromium \
+fzf \
+tmux \
+zsh \
+
+

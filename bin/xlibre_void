@@ -1,0 +1,1 @@
+wget -O - https://github.com/xlibre-void/xlibre/raw/refs/heads/main/install-xlibre.sh | tee install-xlibre.sh && chmod +x install-xlibre.sh && sudo ./install-xlibre.sh
