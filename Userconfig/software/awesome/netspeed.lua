@@ -10,7 +10,7 @@ local net_speed = {}
 
 -- ================= CONFIG =================
 net_speed.update_interval = 1 -- detik
-net_speed.font = "JetBrainsMono Nerd Font 9" -- ubah angka untuk ukuran
+net_speed.font = "JetBrainsMono Nerd Font 8" -- ubah angka untuk ukuran
 net_speed.color = "#00ff00" -- warna teks
 net_speed.icon = " " -- icon jaringan
 -- ==========================================

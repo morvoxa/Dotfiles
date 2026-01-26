@@ -19,3 +19,4 @@ fi
 #for voidlinux
 alias xi="sudo xbps-install -Sy"
 alias xs="sudo xbps-query -Rs"
+alias xrm="sudo xbps-remove -R"
