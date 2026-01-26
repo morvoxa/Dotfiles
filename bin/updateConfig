@@ -4,6 +4,19 @@ else
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
     echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 fi
+
+if [ -d "$HOME/.local/share/fonts" ]; then 
+    echo "fonts redy"
+    else
+        ./bin/fonts_void
+fi
+if [ -d "$HOME/.bin" ]; then 
+    echo "bin ready"
+    else
+        ./bin/install_nvim_dev
+fi
+
+
  for d in awesome waybar nvim alacritty niri; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/Userconfig/software/$d/" ~/.config/$d/ >/dev/null
@@ -13,6 +26,7 @@ for f in "$(pwd)"/Userconfig/home/*; do
     echo "Ready ... $f"
   rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
 done
+
 echo "applications redy"
 cp $(pwd)/Userconfig/software/rofi-menu/chatgpt.desktop ~/.local/share/applications
 

@@ -1,3 +1,4 @@
-sudo sh -c 'xbps-query -m | grep -v -e base-system -e lvm2 -e cryptsetup -e grub | xargs xbps-pkgdb -m auto'
+sudo sh -c 'xbps-query -l | cut -d" " -f2 | xargs xbps-pkgdb -m manual'
+sudo sh -c 'xbps-query -m | grep -v -e base-system -e lvm2 -e cryptsetup -e grub -e NetworkManager -e alsa-utils -e linux -e linux-firmware -e vim -e zsh | xargs xbps-pkgdb -m auto'
 sudo xbps-remove -o
 
