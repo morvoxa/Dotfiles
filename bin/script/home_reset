@@ -1,0 +1,7 @@
+sudo mkdir -p /tmp/empty
+sudo rsync -a --delete \
+  --exclude='.ssh/' \
+  --exclude='Dotfiles' \
+  /tmp/empty/ /home/
+sudo chown mor /home/mor
+

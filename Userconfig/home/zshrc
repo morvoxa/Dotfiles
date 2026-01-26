@@ -5,7 +5,7 @@ if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
 
-bindkey -s '^f' '~/Dotfiles/bin/tmuxCreate\n'
+bindkey -s '^f' '~/Dotfiles/bin/script/tmuxCreate\n'
 alias ls="lsd"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme

@@ -1,8 +1,0 @@
-mkdir -p ~/.local/share/fonts/nerd
-curl -Lo ~/.local/share/fonts/nerd/fonts.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/3270.zip
-unzip -o ~/.local/share/fonts/nerd/fonts.zip -d ~/.local/share/fonts/nerd
-rm ~/.local/share/fonts/nerd/fonts.zip
-#curl -Lo ~/.local/share/fonts/nerd/fonts.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Iosevka.zip
-unzip -o ~/.local/share/fonts/nerd/fonts.zip -d ~/.local/share/fonts/nerd
-rm ~/.local/share/fonts/nerd/fonts.zip
-

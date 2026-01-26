@@ -1,32 +1,96 @@
+#==========================================================
+if command -v awesome >/dev/null 2>&1; then
+echo "----------------------------------------------------"
+else
+echo "----------------------------------------------------"
+sudo bin/script/setup_void
+fi
+#==========================================================
+
+if command -v git >/dev/null 2>&1; then
+echo "----------------------------------------------------"
+else
+echo "----------------------------------------------------"
+sudo xbps-install git unzip wget curl
+fi
+#==========================================================
+
+
  if [ -d "$HOME/powerlevel10k" ]; then 
      echo "powerlevelk is redy"
+echo "----------------------------------------------------"
 else
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
     echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 fi
+sleep 1
+#==========================================================
 
-if [ -d "$HOME/.local/share/fonts" ]; then 
-    echo "fonts redy"
-    else
-        ./bin/fonts_void
+if [ -f ~/.local/share/fonts/nerd/3270NerdFont-Condensed.ttf ]; then
+  echo "nerfonts ready"
+echo "----------------------------------------------------"
+else
+mkdir -p ~/.local/share/fonts/nerd
+curl -Lo ~/.local/share/fonts/nerd/fonts.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip
+unzip -o ~/.local/share/fonts/nerd/fonts.zip -d ~/.local/share/fonts/nerd
+rm ~/.local/share/fonts/nerd/fonts.zip
+curl -Lo ~/.local/share/fonts/nerd/fonts.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/3270.zip
+unzip -o ~/.local/share/fonts/nerd/fonts.zip -d ~/.local/share/fonts/nerd
+rm ~/.local/share/fonts/nerd/fonts.zip
 fi
-if [ -d "$HOME/.bin" ]; then 
-    echo "bin ready"
+
+
+
+sleep 1
+#==========================================================
+if [ -f "$HOME/.bin/nvim" ]; then 
+    echo "neovim dev ready"
+echo "----------------------------------------------------"
     else
-        ./bin/install_nvim_dev
+        ./bin/script/install_nvim_dev
 fi
-
-
+sleep 1
+#==========================================================
+if command -v Xorg >/dev/null 2>&1; then
+echo "Xlibre is ready"
+echo "----------------------------------------------------"
+else
+./bin/script/xlibre_void
+fi
+sleep 1
+#==========================================================
+if [ -d "$HOME/.config" ]; then
+echo "Config directory ready"
+echo "----------------------------------------------------"
+else
+mkdir -p ~/.config
+fi
+#==========================================================
  for d in awesome waybar nvim alacritty niri; do
     echo "Ready ... $d"
+echo "----------------------------------------------------"
   rsync -avh --delete "$(pwd)/Userconfig/software/$d/" ~/.config/$d/ >/dev/null
 done
- ~/Dotfiles/bin/vscodeconfig
+sleep 1
+#==========================================================
+ ~/Dotfiles/bin/script/vscodeconfig
+echo "----------------------------------------------------"
 for f in "$(pwd)"/Userconfig/home/*; do
     echo "Ready ... $f"
+echo "----------------------------------------------------"
   rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
 done
+sleep 1
+#==========================================================
 
 echo "applications redy"
-cp $(pwd)/Userconfig/software/rofi-menu/chatgpt.desktop ~/.local/share/applications
+if [ -d "$HOME/.local/share/applications" ]; then
+echo "Directory applications ready"
+echo "----------------------------------------------------"
+else 
+mkdir -p ~/.local/share/applications
+fi
+sleep 1
+#==========================================================
+cp $(pwd)/Userconfig/software/rofi-menu/chatgpt.desktop ~/.local/share/applications/
 
