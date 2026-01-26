@@ -1,0 +1,3 @@
+sudo sh -c 'xbps-query -m | grep -v -e base-system -e lvm2 -e cryptsetup -e grub | xargs xbps-pkgdb -m auto'
+sudo xbps-remove -o
+
