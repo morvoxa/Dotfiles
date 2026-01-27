@@ -4,6 +4,6 @@ sleep 2
 xbps-install -Syy
 
 echo "Installing software main"
-xbps-install -S fzf git tmux rofi alacritty lm_sensors base-devel unzip curl chromium lsd git zsh NetworkManager alsa-utils wget rsync awesome fastfetch
+xbps-install -S noto-fonts-emeoji twemoji fzf git tmux rofi alacritty lm_sensors base-devel unzip curl chromium lsd git zsh NetworkManager alsa-utils wget rsync awesome fastfetch
 
 
