@@ -9,7 +9,7 @@ local cpu_temp = {}
 
 -- ================= CONFIG =================
 cpu_temp.font = "JetBrainsMono Nerd Font 8"
-cpu_temp.color = "#c9970c"
+cpu_temp.color = "#ffffff"
 cpu_temp.update_time = 1 -- seconds
 cpu_temp.icon = " "
 -- ==========================================
@@ -40,7 +40,7 @@ gears.timer({
 						.. "'>"
 						.. cpu_temp.icon
 						.. temp
-						.. "°C</span>"
+						.. "°C </span>"
 				end
 			end
 		)
