@@ -228,7 +228,7 @@ awful.screen.connect_for_each_screen(function(s)
 	})
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "bottom", screen = s })
+	s.mywibox = awful.wibar({ position = "top", screen = s })
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -540,7 +540,6 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-	-- buttons for the titlebar
 	local buttons = gears.table.join(
 		awful.button({}, 1, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
@@ -552,14 +551,14 @@ client.connect_signal("request::titlebars", function(c)
 		end)
 	)
 
-	awful.titlebar(c):setup({
+	awful.titlebar(c, { size = 14 }):setup({
 		{ -- Left
 			awful.titlebar.widget.iconwidget(c),
 			buttons = buttons,
 			layout = wibox.layout.fixed.horizontal,
 		},
 		{ -- Middle
-			{ -- Title
+			{
 				align = "center",
 				widget = awful.titlebar.widget.titlewidget(c),
 			},
