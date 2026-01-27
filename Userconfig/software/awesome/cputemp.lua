@@ -9,7 +9,7 @@ local cpu_temp = {}
 
 -- ================= CONFIG =================
 cpu_temp.font = "JetBrainsMono Nerd Font 8"
-cpu_temp.color = "#ffffff"
+cpu_temp.color = "#aaaaaa"
 cpu_temp.update_time = 1 -- seconds
 cpu_temp.icon = " "
 -- ==========================================
