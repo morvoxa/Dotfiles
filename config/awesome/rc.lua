@@ -3,9 +3,6 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
-local netS = require("netspeed")
-local nets_custom = netS.new()
-local cpu_temp = require("cputemp")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -54,11 +51,11 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nano"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -71,8 +68,8 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 	awful.layout.suit.max,
-	--awful.layout.suit.tile,
 	awful.layout.suit.floating,
+	--awful.layout.suit.tile,
 	--awful.layout.suit.tile.left,
 	--awful.layout.suit.tile.bottom,
 	--awful.layout.suit.tile.top,
@@ -242,10 +239,8 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
-			--mykeyboardlayout,
+			mykeyboardlayout,
 			wibox.widget.systray(),
-			nets_custom,
-			cpu_temp,
 			mytextclock,
 			s.mylayoutbox,
 		},
@@ -540,6 +535,7 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
+	-- buttons for the titlebar
 	local buttons = gears.table.join(
 		awful.button({}, 1, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
@@ -551,14 +547,14 @@ client.connect_signal("request::titlebars", function(c)
 		end)
 	)
 
-	awful.titlebar(c, { size = 14 }):setup({
+	awful.titlebar(c):setup({
 		{ -- Left
 			awful.titlebar.widget.iconwidget(c),
 			buttons = buttons,
 			layout = wibox.layout.fixed.horizontal,
 		},
 		{ -- Middle
-			{
+			{ -- Title
 				align = "center",
 				widget = awful.titlebar.widget.titlewidget(c),
 			},

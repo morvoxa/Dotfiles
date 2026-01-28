@@ -95,5 +95,5 @@ mkdir -p ~/.local/share/applications
 fi
 sleep 1
 #==========================================================
-cp $(pwd)/config/software/rofi-menu/chatgpt.desktop ~/.local/share/applications/
+cp $(pwd)/config/rofi-menu/chatgpt.desktop ~/.local/share/applications/
 
