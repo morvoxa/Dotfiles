@@ -17,7 +17,7 @@ echo "Config directory ready"
 else
 mkdir -p ~/.config
 fi
- for d in starship awesome nvim alacritty ; do
+ for d in rofi picom starship awesome nvim alacritty ; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/config/$d/" ~/.config/$d/ >/dev/null
 done

@@ -7,6 +7,7 @@
 
 
 
-
+# Picom (compositor)
+picom --config ~/.config/picom/picom.conf &
 xrandr -s 1366x768
 exec awesome

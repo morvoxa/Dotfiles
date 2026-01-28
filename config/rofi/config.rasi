@@ -1,0 +1,66 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus";
+    drun-display-format: "{icon} {name}";
+    font: "Inter 12";
+    location: 0;
+    fullscreen: false;
+}
+
+* {
+    bg: #1e1e2ecc;
+    bg-alt: #1e1e2eaa;
+    fg: #ffffff;
+    fg-alt: #b4befe;
+    border: #89b4fa;
+
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 600px;
+    border-radius: 16px;
+    background-color: @bg;
+    border: 1px;
+    border-color: @border;
+}
+
+mainbox {
+    padding: 16px;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: @bg-alt;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+prompt {
+    enabled: false;
+}
+
+entry {
+    placeholder: "Search Apps…";
+}
+
+listview {
+    lines: 8;
+    spacing: 8px;
+    padding: 8px 0px;
+}
+
+element {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+element selected {
+    background-color: @fg-alt;
+    text-color: #1e1e2e;
+}
