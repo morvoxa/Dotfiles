@@ -3,7 +3,7 @@ echo "repository=https://mirrors.tuna.tsinghua.edu.cn/voidlinux/current" > /etc/
 sleep 2
 xbps-install -Syy
 echo "Installing software main"
-xbps-install -S starship noto-fonts-ttf noto-fonts-emoji twemoji fzf git tmux rofi alacritty unzip curl lsd git zsh NetworkManager alsa-utils wget rsync awesome fastfetch
+xbps-install -S picom starship noto-fonts-ttf noto-fonts-emoji twemoji fzf git tmux rofi alacritty unzip curl lsd git zsh NetworkManager alsa-utils wget rsync awesome fastfetch
 ./bin/script/xlibre_void
 
 
