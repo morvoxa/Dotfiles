@@ -1,9 +1,39 @@
-echo "setup repo to tuna.tsinghua"
-echo "repository=https://mirrors.tuna.tsinghua.edu.cn/voidlinux/current" > /etc/xbps.d/00-repository-main.conf
+#!/bin/sh
+set -e
+
+echo ">> Setup repo TUNA"
+cat > /etc/xbps.d/00-repository-main.conf <<EOF
+repository=https://mirrors.tuna.tsinghua.edu.cn/voidlinux/current
+EOF
+
 sleep 2
 xbps-install -Syy
-echo "Installing software main"
-xbps-install -S picom starship noto-fonts-ttf noto-fonts-emoji twemoji fzf git tmux rofi alacritty unzip curl lsd git zsh NetworkManager alsa-utils wget rsync awesome fastfetch
+
+echo ">> Installing main packages"
+xbps-install -Sy \
+  awesome fastfetch picom rofi alacritty \
+  starship zsh tmux fzf git \
+  noto-fonts-ttf noto-fonts-emoji twemoji \
+  unzip curl wget rsync lsd \
+  NetworkManager dbus alsa-utils
+
+echo ">> Enable services"
+mkdir -p /var/service
+
+enable_service() {
+  svc="$1"
+  if [ -L "/var/service/$svc" ]; then
+    echo "Service $svc already enabled"
+  else
+    ln -s "/etc/sv/$svc" "/var/service/$svc"
+    echo "Service $svc enabled"
+  fi
+}
+
+enable_service NetworkManager
+enable_service dbus
+enable_service alsa
+
 ./bin/script/xlibre_void
 
-
+echo ">> Done"
