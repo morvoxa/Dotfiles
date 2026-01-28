@@ -1,0 +1,46 @@
+add_newline = true
+
+format = """
+$directory$git_branch$git_status$cmd_duration
+$character
+"""
+
+# ─────────────────────────
+# DIRECTORY
+# ─────────────────────────
+[directory]
+style = "bold #0A84FF"
+format = "[$path]($style) "
+truncation_length = 3
+truncation_symbol = "…/"
+
+# ─────────────────────────
+# GIT
+# ─────────────────────────
+[git_branch]
+symbol = " "
+style = "#30D158"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "#FF453A"
+format = "[$all_status$ahead_behind]($style) "
+modified = "●"
+staged = "●"
+untracked = "●"
+deleted = "●"
+
+# ─────────────────────────
+# COMMAND DURATION
+# ─────────────────────────
+[cmd_duration]
+min_time = 1000
+style = "#FF9F0A"
+format = "[$duration]($style) "
+
+# ─────────────────────────
+# PROMPT SYMBOL
+# ─────────────────────────
+[character]
+success_symbol = "[❯](#30D158)"
+error_symbol = "[❯](#FF453A)"
