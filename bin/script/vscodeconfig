@@ -2,7 +2,7 @@
 
 # Nama folder sumber dan tujuan
 d="Code - OSS"
-src="$HOME/Dotfiles/Userconfig/software/$d"
+src="$HOME/Dotfiles/config/$d"
 dest="$HOME/.config/$d"
 
 # Pastikan folder tujuan ada

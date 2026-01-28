@@ -72,13 +72,13 @@ fi
  for d in awesome waybar nvim alacritty niri; do
     echo "Ready ... $d"
 echo "----------------------------------------------------"
-  rsync -avh --delete "$(pwd)/Userconfig/software/$d/" ~/.config/$d/ >/dev/null
+  rsync -avh --delete "$(pwd)/config/$d/" ~/.config/$d/ >/dev/null
 done
 sleep 1
 #==========================================================
  ~/Dotfiles/bin/script/vscodeconfig
 echo "----------------------------------------------------"
-for f in "$(pwd)"/Userconfig/home/*; do
+for f in "$(pwd)"/config/home/*; do
     echo "Ready ... $f"
 echo "----------------------------------------------------"
   rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
@@ -95,5 +95,5 @@ mkdir -p ~/.local/share/applications
 fi
 sleep 1
 #==========================================================
-cp $(pwd)/Userconfig/software/rofi-menu/chatgpt.desktop ~/.local/share/applications/
+cp $(pwd)/config/software/rofi-menu/chatgpt.desktop ~/.local/share/applications/
 
