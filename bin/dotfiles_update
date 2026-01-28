@@ -1,0 +1,47 @@
+#==========================================================
+ if [ -d "$HOME/powerlevel10k" ]; then 
+     echo "powerlevelk is redy"
+else
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+fi
+#==========================================================
+if [ -f "$HOME/.bin/nvim" ]; then 
+    echo "neovim dev ready"
+    else
+        ./bin/script/install_nvim_dev
+fi
+#==========================================================
+if [ -d "$HOME/.config" ]; then
+echo "Config directory ready"
+else
+mkdir -p ~/.config
+fi
+ for d in awesome nvim alacritty ; do
+    echo "Ready ... $d"
+  rsync -avh --delete "$(pwd)/config/$d/" ~/.config/$d/ >/dev/null
+done
+d="Code - OSS"
+src="$HOME/Dotfiles/config/$d"
+dest="$HOME/.config/$d"
+mkdir -p "$dest"
+if [ -d "$src" ]; then
+    rsync -av "$src/" "$dest/" >/dev/null
+    echo "Ready ... $d"
+else
+    echo "Skipped ... $d (folder not found at $src)"
+fi
+for f in "$(pwd)"/config/home/*; do
+    echo "Ready ... $f"
+  rsync -avh "$f" ~/."$(basename "$f")" >/dev/null
+done
+#==========================================================
+
+if [ -d "$HOME/.local/share/applications" ]; then
+echo "rofi update"
+cp $(pwd)/config/rofi-menu/chatgpt.desktop ~/.local/share/applications/
+else 
+mkdir -p ~/.local/share/applications
+cp $(pwd)/config/rofi-menu/chatgpt.desktop ~/.local/share/applications/
+fi
+#==========================================================
