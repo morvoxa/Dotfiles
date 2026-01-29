@@ -9,14 +9,12 @@ echo "Config directory ready"
 else
 mkdir -p ~/.config
 fi
- for d in DankMaterialShell rofi picom starship awesome nvim alacritty ; do
+ for d in niri rofi picom starship awesome nvim alacritty ; do
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/config/$d/" ~/.config/$d/ >/dev/null
 done
   rsync -avh "$(pwd)/config/chromium/" ~/.config/chromium/ >/dev/null
     echo "Ready ... chromium"
-  rsync -avh "$(pwd)/config/niri/" ~/.config/niri/ >/dev/null
-    echo "Ready ... niri"
 d="Code - OSS"
 src="$HOME/Dotfiles/config/$d"
 dest="$HOME/.config/$d"
