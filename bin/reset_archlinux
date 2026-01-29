@@ -4,7 +4,6 @@ set -e
 # ===============================
 # Konfigurasi
 # ===============================
-
 EXPLICIT_PKGS="
 base
 linux
@@ -24,31 +23,28 @@ gcc-libs
 "
 
 FLAG="/var/lib/pacman/.orphan-cleanup-done"
+ULTRA_FLAG="/var/lib/pacman/.ultra-cleanup-done"
 
 # ===============================
 # Safety check
 # ===============================
-
 if [ "$EUID" -ne 0 ]; then
   echo "Harus dijalankan sebagai root."
   exit 1
 fi
 
-echo "==> Arch orphan cleanup (idempotent)"
+echo "==> Arch ultra-aggressive cleanup (user-safe)"
 
 # ===============================
-# Step 1: reset explicit lama (AMAN)
+# Step 1: Reset explicit lama
 # ===============================
-
-echo "==> [1/4] Reset paket explicit lama menjadi dependency"
+echo "==> Reset paket explicit lama menjadi dependency"
 pacman -Qq --explicit | pacman -D --asdeps -
 
 # ===============================
-# Step 2: tandai paket inti
+# Step 2: Tandai paket inti
 # ===============================
-
-echo "==> [2/4] Menandai paket inti sebagai explicit"
-
+echo "==> Menandai paket inti sebagai explicit"
 for pkg in $EXPLICIT_PKGS; do
   if pacman -Qi "$pkg" >/dev/null 2>&1; then
     pacman -D --asexplicit "$pkg"
@@ -58,49 +54,59 @@ for pkg in $EXPLICIT_PKGS; do
 done
 
 # ===============================
-# Step 3: tampilkan orphan
+# Step 3: Tampilkan orphan
 # ===============================
-
-echo "==> [3/4] Orphan packages:"
+echo "==> Orphan packages:"
 ORPHANS="$(pacman -Qtdq || true)"
-
 if [ -z "$ORPHANS" ]; then
   echo "  (tidak ada orphan)"
 else
   echo "$ORPHANS"
 fi
 
-echo
-echo "================================================="
-echo " PASTIKAN PAKET INTI TIDAK ADA DI DAFTAR DI ATAS "
-echo "================================================="
-echo
+# ===============================
+# Step 4: Hapus orphan
+# ===============================
+if [ ! -f "$FLAG" ] && [ -n "$ORPHANS" ]; then
+  read -p "Lanjut hapus orphan? (yes/no): " ans
+  if [ "$ans" = "yes" ]; then
+    echo "==> Menghapus orphan packages"
+    echo "$ORPHANS" | pacman -Rns -
+    touch "$FLAG"
+  else
+    echo "Dibatalkan."
+  fi
+fi
 
 # ===============================
-# Step 4: hapus orphan (sekali saja)
+# Step 5: Hapus cache paket pacman
 # ===============================
+echo "==> Menghapus semua cache paket pacman (/var/cache/pacman/pkg)"
+pacman -Scc --noconfirm
 
-if [ -f "$FLAG" ]; then
-  echo "==> Script sudah pernah dijalankan."
-  echo "==> Penghapusan orphan dilewati (mode aman)."
-  exit 0
-fi
+# ===============================
+# Step 6: Hapus konfigurasi user non-default
+# ===============================
+echo "==> Menghapus konfigurasi user (~/.config, ~/.zshrc, ~/.vimrc, ~/.cache)"
+USERS=$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd)
 
-if [ -z "$ORPHANS" ]; then
-  echo "==> Tidak ada orphan untuk dihapus."
-  touch "$FLAG"
-  exit 0
-fi
+for user in $USERS; do
+  HOME_DIR=$(eval echo "~$user")
+  echo "  - Membersihkan konfigurasi user: $user"
 
-read -p "Lanjut hapus orphan? (yes/no): " ans
-if [ "$ans" != "yes" ]; then
-  echo "Dibatalkan."
-  exit 0
-fi
+  rm -f "$HOME_DIR/.zshrc" "$HOME_DIR/.vimrc"
+  rm -rf "$HOME_DIR/.config" "$HOME_DIR/.cache"
+done
 
-echo "==> [4/4] Menghapus orphan packages"
-echo "$ORPHANS" | pacman -Rns -
+# ===============================
+# Step 7: Hapus temp & log lama
+# ===============================
+echo "==> Membersihkan /tmp dan log lama"
+rm -rf /tmp/*
+journalctl --rotate
+journalctl --vacuum-time=1s
 
-touch "$FLAG"
+touch "$ULTRA_FLAG"
 
-echo "==> Selesai"
+echo "==> ULTRA CLEANUP SELESAI! Sistem sudah dibersihkan secara agresif."
+
