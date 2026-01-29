@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+
+echo "==> [1/4] Menandai SEMUA paket sebagai dependency (auto)"
+pacman -Qq | pacman -D --asdeps -
+
+echo "==> [2/4] Menandai paket inti sebagai explicit (manual)"
+pacman -D --asexplicit \
+  base \
+  linux \
+  linux-firmware \
+  grub \
+  efibootmgr \
+  os-prober \
+  networkmanager \
+  zsh \
+  vim \
+  git
+
+echo "==> [3/4] Menampilkan orphan packages (HARUS dicek)"
+pacman -Qtd || true
+
+echo
+echo "================================================="
+echo " JIKA PAKET INTI TIDAK MUNCUL DI ATAS, LANJUTKAN "
+echo "================================================="
+echo
+
+read -p "Lanjut hapus orphan? (yes/no): " ans
+if [ "$ans" != "yes" ]; then
+  echo "Dibatalkan."
+  exit 0
+fi
+
+echo "==> [4/4] Menghapus orphan packages"
+pacman -Qtdq | pacman -Rns -
+
+echo "==> Menghapus ~/.zshrc"
+rm -f /home/mor/.zshrc
+
+echo "==> Selesai"
