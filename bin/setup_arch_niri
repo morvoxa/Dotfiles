@@ -23,6 +23,8 @@ echo "→ User biasa: $REAL_USER"
 pacman -Syy --needed \
   base-devel \
   git \
+  rsync \
+  starship \
   lsd \
   fzf \
   tmux \

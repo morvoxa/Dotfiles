@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eu
 
 # ===============================
 # Konfigurasi
@@ -12,101 +12,97 @@ grub
 efibootmgr
 os-prober
 networkmanager
+openssh
+sudo
 zsh
-rsync
 vim
 git
-sudo
 bash
 glibc
 gcc-libs
 "
 
-FLAG="/var/lib/pacman/.orphan-cleanup-done"
-ULTRA_FLAG="/var/lib/pacman/.ultra-cleanup-done"
+echo "==> Arch repeatable ultra-cleanup"
 
 # ===============================
 # Safety check
 # ===============================
-if [ "$EUID" -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
   echo "Harus dijalankan sebagai root."
   exit 1
 fi
 
-echo "==> Arch ultra-aggressive cleanup (user-safe)"
+# ===============================
+# Step 1: Reset explicit lama (IDEMPOTENT)
+# ===============================
+echo "==> Reset explicit package (selain core) menjadi dependency"
 
-# ===============================
-# Step 1: Reset explicit lama
-# ===============================
-echo "==> Reset paket explicit lama menjadi dependency"
-pacman -Qq --explicit | pacman -D --asdeps -
-
-# ===============================
-# Step 2: Tandai paket inti
-# ===============================
-echo "==> Menandai paket inti sebagai explicit"
-for pkg in $EXPLICIT_PKGS; do
-  if pacman -Qi "$pkg" >/dev/null 2>&1; then
-    pacman -D --asexplicit "$pkg"
-  else
-    echo "  - (skip) $pkg tidak terpasang"
-  fi
+pacman -Qq --explicit | while read -r pkg; do
+  echo "$EXPLICIT_PKGS" | grep -qx "$pkg" || pacman -D --asdeps "$pkg" 2>/dev/null || true
 done
 
 # ===============================
-# Step 3: Tampilkan orphan
+# Step 2: Tandai core packages sebagai explicit
 # ===============================
-echo "==> Orphan packages:"
+echo "==> Menandai core packages sebagai explicit"
+
+for pkg in $EXPLICIT_PKGS; do
+  pacman -Qi "$pkg" >/dev/null 2>&1 && pacman -D --asexplicit "$pkg" || true
+done
+
+# ===============================
+# Step 3: Cari orphan (SAFE)
+# ===============================
+echo "==> Mencari orphan packages"
 ORPHANS="$(pacman -Qtdq || true)"
+
 if [ -z "$ORPHANS" ]; then
   echo "  (tidak ada orphan)"
 else
-  echo "$ORPHANS"
+  echo "==> Orphan packages ditemukan:"
+  echo "$ORPHANS" | sed 's/^/  - /'
+
+  echo
+  echo "==> Paket di atas AKAN DIHAPUS"
+  printf "Lanjutkan? [y/N] "
+  read -r confirm
+
+  case "$confirm" in
+    y|Y)
+      echo "==> Menghapus orphan packages"
+      echo "$ORPHANS" | pacman -Rns -
+      ;;
+    *)
+      echo "==> Dibatalkan oleh user"
+      exit 0
+      ;;
+  esac
 fi
 
 # ===============================
-# Step 4: Hapus orphan
+# Step 4: Bersihkan pacman cache (REPEATABLE)
 # ===============================
-if [ ! -f "$FLAG" ] && [ -n "$ORPHANS" ]; then
-  read -p "Lanjut hapus orphan? (yes/no): " ans
-  if [ "$ans" = "yes" ]; then
-    echo "==> Menghapus orphan packages"
-    echo "$ORPHANS" | pacman -Rns -
-    touch "$FLAG"
-  else
-    echo "Dibatalkan."
-  fi
-fi
+echo "==> Membersihkan pacman cache"
+yes | pacman -Scc >/dev/null
 
 # ===============================
-# Step 5: Hapus cache paket pacman
+# Step 5: Bersihkan cache user SAJA (AMAN)
 # ===============================
-echo "==> Menghapus semua cache paket pacman (/var/cache/pacman/pkg)"
-pacman -Scc --noconfirm
+echo "==> Membersihkan cache user (~/.cache saja)"
 
-# ===============================
-# Step 6: Hapus konfigurasi user non-default
-# ===============================
-echo "==> Menghapus konfigurasi user (~/.config, ~/.zshrc, ~/.vimrc, ~/.cache)"
-USERS=$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd)
-
-for user in $USERS; do
+awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | while read -r user; do
   HOME_DIR=$(eval echo "~$user")
-  echo "  - Membersihkan konfigurasi user: $user"
-
-  rm -f "$HOME_DIR/.zshrc" "$HOME_DIR/.vimrc"
-  rm -rf "$HOME_DIR/.config" "$HOME_DIR/.cache"
+  [ -d "$HOME_DIR/.cache" ] && rm -rf "$HOME_DIR/.cache"/*
 done
+rm /home/mor/.zshrc
 
 # ===============================
-# Step 7: Hapus temp & log lama
+# Step 6: Bersihkan tmp & journal (AMAN)
 # ===============================
-echo "==> Membersihkan /tmp dan log lama"
-rm -rf /tmp/*
+echo "==> Membersihkan /tmp & journal"
+systemd-tmpfiles --clean
 journalctl --rotate
 journalctl --vacuum-time=1s
 
-touch "$ULTRA_FLAG"
-
-echo "==> ULTRA CLEANUP SELESAI! Sistem sudah dibersihkan secara agresif."
+echo "==> CLEANUP SELESAI (repeatable, no prompt)"
 
