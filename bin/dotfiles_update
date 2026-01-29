@@ -13,8 +13,6 @@ fi
     echo "Ready ... $d"
   rsync -avh --delete "$(pwd)/config/$d/" ~/.config/$d/ >/dev/null
 done
-  rsync -avh "$(pwd)/config/chromium/" ~/.config/chromium/ >/dev/null
-    echo "Ready ... chromium"
   rsync -avh "$(pwd)/config/niri/" ~/.config/niri/ >/dev/null
     echo "Ready ... ready"
 d="Code - OSS"
