@@ -49,9 +49,8 @@ echo "==> Menandai core packages sebagai explicit"
 for pkg in $EXPLICIT_PKGS; do
   pacman -Qi "$pkg" >/dev/null 2>&1 && pacman -D --asexplicit "$pkg" || true
 done
-
 # ===============================
-# Step 3: Cari orphan (SAFE)
+# Step 3: Cari orphan (FRIENDLY)
 # ===============================
 echo "==> Mencari orphan packages"
 ORPHANS="$(pacman -Qtdq || true)"
@@ -59,18 +58,35 @@ ORPHANS="$(pacman -Qtdq || true)"
 if [ -z "$ORPHANS" ]; then
   echo "  (tidak ada orphan)"
 else
-  echo "==> Orphan packages ditemukan:"
-  echo "$ORPHANS" | sed 's/^/  - /'
-
   echo
-  echo "==> Paket di atas AKAN DIHAPUS"
-  printf "Lanjutkan? [y/N] "
+  echo "========================================"
+  echo "  PACKAGES YANG AKAN DIHAPUS"
+  echo "========================================"
+
+  i=1
+  for pkg in $ORPHANS; do
+    ver=$(pacman -Qi "$pkg" | awk '/^Version/ {print $3}')
+    printf "  %3d. %-28s %s\n" "$i" "$pkg" "$ver"
+    i=$((i+1))
+  done
+
+  echo "----------------------------------------"
+  echo " Total paket: $((i-1))"
+  echo "----------------------------------------"
+  echo
+  printf "Lanjutkan penghapusan? [y/N] "
   read -r confirm
 
   case "$confirm" in
     y|Y)
-      echo "==> Menghapus orphan packages"
-      echo "$ORPHANS" | pacman -Rns -
+      echo
+      echo "========================================"
+      echo "  MENGHAPUS ORPHAN PACKAGES"
+      echo "========================================"
+      echo
+
+      pacman -Rns --noconfirm $ORPHANS \
+        | sed -n 's/^removing /  removing /p'
       ;;
     *)
       echo "==> Dibatalkan oleh user"
@@ -78,6 +94,7 @@ else
       ;;
   esac
 fi
+
 
 # ===============================
 # Step 4: Bersihkan pacman cache (REPEATABLE)
