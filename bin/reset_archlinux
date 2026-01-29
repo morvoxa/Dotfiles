@@ -1,30 +1,96 @@
 #!/bin/sh
 set -e
 
-echo "==> [1/4] Menandai SEMUA paket sebagai dependency (auto)"
-pacman -Qq | pacman -D --asdeps -
+# ===============================
+# Konfigurasi
+# ===============================
 
-echo "==> [2/4] Menandai paket inti sebagai explicit (manual)"
-pacman -D --asexplicit \
-  base \
-  linux \
-  linux-firmware \
-  grub \
-  efibootmgr \
-  os-prober \
-  networkmanager \
-  zsh \
-  vim \
-  git
+EXPLICIT_PKGS="
+base
+linux
+linux-firmware
+grub
+efibootmgr
+os-prober
+networkmanager
+zsh
+rsync
+vim
+git
+sudo
+bash
+glibc
+gcc-libs
+"
 
-echo "==> [3/4] Menampilkan orphan packages (HARUS dicek)"
-pacman -Qtd || true
+FLAG="/var/lib/pacman/.orphan-cleanup-done"
+
+# ===============================
+# Safety check
+# ===============================
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Harus dijalankan sebagai root."
+  exit 1
+fi
+
+echo "==> Arch orphan cleanup (idempotent)"
+
+# ===============================
+# Step 1: reset explicit lama (AMAN)
+# ===============================
+
+echo "==> [1/4] Reset paket explicit lama menjadi dependency"
+pacman -Qq --explicit | pacman -D --asdeps -
+
+# ===============================
+# Step 2: tandai paket inti
+# ===============================
+
+echo "==> [2/4] Menandai paket inti sebagai explicit"
+
+for pkg in $EXPLICIT_PKGS; do
+  if pacman -Qi "$pkg" >/dev/null 2>&1; then
+    pacman -D --asexplicit "$pkg"
+  else
+    echo "  - (skip) $pkg tidak terpasang"
+  fi
+done
+
+# ===============================
+# Step 3: tampilkan orphan
+# ===============================
+
+echo "==> [3/4] Orphan packages:"
+ORPHANS="$(pacman -Qtdq || true)"
+
+if [ -z "$ORPHANS" ]; then
+  echo "  (tidak ada orphan)"
+else
+  echo "$ORPHANS"
+fi
 
 echo
 echo "================================================="
-echo " JIKA PAKET INTI TIDAK MUNCUL DI ATAS, LANJUTKAN "
+echo " PASTIKAN PAKET INTI TIDAK ADA DI DAFTAR DI ATAS "
 echo "================================================="
 echo
+
+# ===============================
+# Step 4: hapus orphan (sekali saja)
+# ===============================
+
+if [ -f "$FLAG" ]; then
+  echo "==> Script sudah pernah dijalankan."
+  echo "==> Penghapusan orphan dilewati (mode aman)."
+  exit 0
+fi
+
+if [ -z "$ORPHANS" ]; then
+  echo "==> Tidak ada orphan untuk dihapus."
+  touch "$FLAG"
+  exit 0
+fi
 
 read -p "Lanjut hapus orphan? (yes/no): " ans
 if [ "$ans" != "yes" ]; then
@@ -33,9 +99,8 @@ if [ "$ans" != "yes" ]; then
 fi
 
 echo "==> [4/4] Menghapus orphan packages"
-pacman -Qtdq | pacman -Rns -
+echo "$ORPHANS" | pacman -Rns -
 
-echo "==> Menghapus ~/.zshrc"
-rm -f /home/mor/.zshrc
+touch "$FLAG"
 
 echo "==> Selesai"
