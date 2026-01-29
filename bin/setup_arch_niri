@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+# ===== GUARD: wajib root =====
+if [[ $EUID -ne 0 ]]; then
+  echo "Jalankan script ini sebagai root"
+  exit 1
+fi
+
+# ===== ambil user asli =====
+if [[ -z "$SUDO_USER" ]]; then
+  echo "Script ini harus dijalankan via sudo (bukan login langsung sebagai root)"
+  exit 1
+fi
+
+REAL_USER="$SUDO_USER"
+USER_HOME=$(eval echo "~$REAL_USER")
+
+echo "→ Root phase OK"
+echo "→ User biasa: $REAL_USER"
+
+# ===== BAGIAN ROOT =====
+pacman -Syy --needed \
+  base-devel \
+  git \
+  lsd \
+  fzf \
+  tmux \
+  niri \
+  alacritty \
+  chromium \
+  wl-clipboard
+
+# ===== PINDAH KE USER BIASA =====
+sudo -u "$REAL_USER" bash <<EOF
+set -e
+cd "$USER_HOME"
+
+if [[ ! -d dms-shell-bin ]]; then
+  git clone https://aur.archlinux.org/dms-shell-bin.git
+fi
+
+cd dms-shell-bin
+makepkg -si --noconfirm
+EOF
+
