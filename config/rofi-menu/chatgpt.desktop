@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=ChatGPT
-Comment=Buka ChatGPT di browser
-Exec=chromium https://chat.openai.com/
+Name=Gemini
+Comment=Buka Gemini di browser
+Exec=chromium https://gemini.google.com
 Icon=internet-web-browser
 Terminal=false
 Type=Application
