@@ -103,7 +103,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "alacritty"; }
-    Mod+D { spawn "ignis" "toggle-window" "Launcher"; }
+    Mod+Space { spawn "ignis" "toggle-window" "Launcher"; }
 //    Mod+L { spawn "hyprlock"; }
     Mod+E { spawn "nautilus"; }
     Mod+Escape { spawn "ignis" "toggle-window" "PowerMenu"; }
