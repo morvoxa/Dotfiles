@@ -12,6 +12,7 @@ export ELECTRON_OZONE_PLATFORM_HINT=wayland
 export PATH=~/.bin:~/.cargo/bin:$PATH
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    export MOZ_ENABLE_WAYLAND=1
     command -v niri >/dev/null && exec niri-session
     exec startx
 fi
