@@ -52,13 +52,13 @@ done
 
 # Niri (tanpa --delete)
 sync_dir "$CONFIG_DIR/niri" "$HOME_CONFIG/niri"
-sync_dir "$CONFIG_DIR/kitty" "$HOME_CONFIG/kitty"
+#sync_dir "$CONFIG_DIR/kitty" "$HOME_CONFIG/kitty"
 
 # ==========================================================
 # Code - OSS
 # ==========================================================
 CODE_OSS_DIR="Code - OSS"
-sync_dir "$HOME/Dotfiles/config/$CODE_OSS_DIR" "$HOME_CONFIG/$CODE_OSS_DIR"
+sync_dir "$HOME/config_manager/config/$CODE_OSS_DIR" "$HOME_CONFIG/$CODE_OSS_DIR"
 
 # ==========================================================
 # Home dotfiles

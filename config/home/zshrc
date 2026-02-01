@@ -5,7 +5,7 @@ eval "$(starship init zsh)"
 if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
-bindkey -s '^f' '~/Dotfiles/bin/script/tmuxCreate\n'
+bindkey -s '^f' '~/config_manager/bin/script/tmuxCreate\n'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     echo
