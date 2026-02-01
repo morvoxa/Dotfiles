@@ -1,22 +1,40 @@
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 ZSH_THEME=""
+export PATH=~/.local/bin:~/.bin:~/.cargo/bin:$PATH
 eval "$(starship init zsh)"
-
 if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
-
 bindkey -s '^f' '~/Dotfiles/bin/script/tmuxCreate\n'
-export ELECTRON_OZONE_PLATFORM_HINT=wayland
-export PATH=~/.local/bin:~/.bin:~/.cargo/bin:$PATH
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    export MOZ_ENABLE_WAYLAND=1
-    command -v niri >/dev/null && exec niri --session
-    command -v niri >/dev/null && exec niri-session
-    exec startx
+    echo
+    echo "Pilih mode:"
+    echo "1) Shell saja"
+    echo "2) Session grafis (Wayland/X)"
+    echo -n "Pilihan [1/2]: "
+    read -r MODE
+
+    case "$MODE" in
+        2)
+            export ELECTRON_OZONE_PLATFORM_HINT=wayland
+            export MOZ_ENABLE_WAYLAND=1
+
+            if command -v niri >/dev/null; then
+                exec niri --session
+            elif command -v niri-session >/dev/null; then
+                exec niri-session
+            else
+                exec startx
+            fi
+            ;;
+        *)
+            echo "Masuk shell..."
+            ;;
+    esac
 fi
 #for voidlinux
 alias xi="sudo xbps-install -Syu"
+alias ls="ls --color=auto"
 alias xs="sudo xbps-query -Rs"
 alias xrm="sudo xbps-remove -R"
