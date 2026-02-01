@@ -1,6 +1,6 @@
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 ZSH_THEME=""
-export PATH=~/.local/bin:~/.bin:~/.cargo/bin:$PATH
+export PATH=~/.local/bin:~/.cargo/bin:/bin:/usr/local/bin
 eval "$(starship init zsh)"
 if [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]]; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
